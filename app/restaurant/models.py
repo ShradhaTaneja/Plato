@@ -1,6 +1,6 @@
 from app.db import MySql
 
-def get_all_restaurants():
+def fetch_all_restaurants():
     db = MySql()
     conn = db.get_conn()
     cursor = conn.cursor()
@@ -25,3 +25,23 @@ def get_all_restaurants():
     return all_data
 
 
+def fetch_restaurant(rid):
+    db = MySql()
+    conn = db.get_conn()
+    cursor = conn.cursor()
+    query = 'select rid, rname, raddress, rcity, rstate, rating, rcontact, rwebsite, remail from restaurant where rid =  %s;' % (rid)
+    cursor.execute(query)
+    data =  cursor.fetchone()
+
+    details = {}
+    details['rid'] = data[0]
+    details['rname'] = data[1]
+    details['raddress'] = data[2]
+    details['rcity'] = data[3]
+    details['rstate'] = data[4]
+    details['rating'] = data[5]
+    details['rcontact'] = data[6]
+    details['rwebsite'] = data[7]
+    details['remail'] = data[8]
+
+    return details

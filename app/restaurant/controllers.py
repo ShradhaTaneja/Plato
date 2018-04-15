@@ -8,8 +8,12 @@ def test():
     return 'test from controller'
 
 @api.route('/', methods=['GET'])
-def get_all():
-    all_data = rest.get_all_restaurants()
+@api.route('/<rid>', methods=['GET'])
+def get_all(rid = None):
+    if rid is None:
+        all_data = rest.get_all_restaurants()
+    else:
+        all_data = rest.get_restaurant(rid)
     return jsonify(all_data)
 
 
