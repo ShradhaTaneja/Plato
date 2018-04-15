@@ -22,6 +22,7 @@ def fetch_all_restaurants():
         row_data['remail'] = row[8]
         all_data.append(row_data)
 
+    db.close()
     return all_data
 
 
@@ -44,4 +45,6 @@ def fetch_restaurant(rid):
     details['rwebsite'] = data[7]
     details['remail'] = data[8]
 
+    db.close()
     return details
+
