@@ -1,5 +1,6 @@
-from flask import Blueprint, jsonify
-from app.commons.modules import restaurant as rest
+from flask import Blueprint, jsonify, request
+from app.commons.modules import restaurant as module
+from werkzeug.datastructures import CombinedMultiDict
 
 api = Blueprint('restaurant', __name__, url_prefix = '/restaurant')
 
@@ -11,9 +12,23 @@ def test():
 @api.route('/<rid>', methods=['GET'])
 def get_all(rid = None):
     if rid is None:
-        all_data = rest.get_all_restaurants()
+        all_data = module.get_all_restaurants()
     else:
-        all_data = rest.get_restaurant(rid)
+        print 'inside controller, rid given calling get rest'
+        all_data = module.get_restaurant(rid)
     return jsonify(all_data)
 
+@api.route('/add', methods=['POST'])
+def add_restaurant():
+    required_parameters = ['name', 'address', 'city', 'state', 'contact']
+    incoming_data = dict(request.get_json())
+    incoming_parameters = incoming_data.keys()
 
+    if len(set(required_parameters) - set(incoming_parameters)) > 0:
+        return jsonify({
+                'status' : 'failure',
+                'message' : 'missing parameters.. you need to give it ALL.. :P (%s)' % (', '.join(required_parameters))
+                })
+
+    response = module.add_restaurant(incoming_data)
+    return jsonify(response)
