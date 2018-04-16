@@ -33,6 +33,7 @@ def fetch_restaurant(rid):
     data =  cursor.fetchone()
     if data is None:
         return {}
+    details = {}
     details['rid'] = data[0]
     details['name'] = data[1]
     details['address'] = data[2]
