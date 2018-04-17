@@ -1,5 +1,16 @@
 from app.db import get_mysql_conn
 
+def exists(rid):
+    conn = get_mysql_conn()
+    cursor = conn.cursor()
+    query = 'select rid, rname, raddress, rcity, rstate, rating, rcontact, rwebsite, remail from restaurant where rid = %d ;' % int(rid)
+    cursor.execute(query)
+
+    if cursor.fetchone() is None:
+        return False
+    return True
+
+
 def fetch_all_restaurants():
     conn = get_mysql_conn()
     cursor = conn.cursor()
