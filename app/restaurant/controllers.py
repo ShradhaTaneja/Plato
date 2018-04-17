@@ -32,3 +32,8 @@ def add_restaurant():
 
     response = module.add_restaurant(incoming_data)
     return jsonify(response)
+
+@api.route('/delete/<rid>', methods=['GET'])
+def delete_restaurant(rid):
+    all_data = module.remove_restaurant(rid)
+    return jsonify(all_data)

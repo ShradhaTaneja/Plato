@@ -83,3 +83,12 @@ def insert_restaurant(data):
     return rid
 
 
+def delete_restaurant(rid):
+    conn = get_mysql_conn()
+    cursor = conn.cursor()
+
+    delete_query = 'DELETE FROM restaurant where rid = %d ' % int(rid)
+
+    cursor.execute(delete_query)
+    conn.commit()
+    conn.close()

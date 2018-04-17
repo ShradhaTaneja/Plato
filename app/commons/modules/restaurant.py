@@ -39,3 +39,16 @@ def add_restaurant(data):
         response['data'] = None
         response['message'] = str(e)
     return response
+
+
+
+
+def remove_restaurant(rid):
+    response = {}
+    try:
+        model.delete_restaurant(rid)
+        response['status'] = 'success'
+    except Exception as e:
+        response['status'] = 'failure'
+        response['message'] = str(e)
+    return response
