@@ -12,6 +12,8 @@ def get_all_restaurants():
         response['message'] = str(e)
     return response
 
+def exists(rid):
+    return model.exists(rid)
 
 def get_restaurant(rid):
     response = {}
