@@ -21,3 +21,12 @@ def get_all_menu(rid):
         response['message'] = str(e)
     return response
 
+def remove_menu(rid, mcategory):
+    response = {}
+    try:
+        model.delete_menu(rid, mcategory)
+        response['status'] = 'success'
+    except Exception as e:
+        response['status'] = 'failure'
+        response['message'] = str(e)
+    return response

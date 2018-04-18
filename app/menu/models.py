@@ -14,3 +14,11 @@ def fetch_all_menu(rid):
     conn.close()
     return all_data
 
+def delete_menu(rid, mcategory):
+    conn = get_mysql_conn()
+    cursor = conn.cursor()
+    query = 'DELETE FROM menu_items WHERE rid = %d AND menu_category = \'%s\';' % (rid, mcategory)
+    print query
+    cursor.execute(query)
+    conn.commit()
+    conn.close()
