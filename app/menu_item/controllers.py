@@ -32,3 +32,18 @@ def get_item(rid = None, item_id = None):
                 })
     all_data = module.get_item(int(rid), str(item_id))
     return jsonify(all_data)
+
+@api.route('/add', methods=['POST'])
+def add_menu_item():
+    required_parameters = ['rid', 'category', 'name', 'price']
+    incoming_data = dict(request.get_json())
+    incoming_parameters = incoming_data.keys()
+
+    if len(set(required_parameters) - set(incoming_parameters)) > 0:
+        return jsonify({
+                'status' : 'failure',
+                'message' : 'missing parameters.. you need to give it ALL.. :P (%s)' % (', '.join(required_parameters))
+                })
+
+    response = module.add_menu_item(incoming_data)
+    return jsonify(response)

@@ -21,6 +21,28 @@ def fetch_all_menu_items(rid):
     conn.close()
     return all_data
 
+
+def insert_menu_item(data):
+    conn = get_mysql_conn()
+    cursor = conn.cursor()
+
+    input_columns = data.keys()
+
+    input_column_data = []
+
+    for col in input_columns:
+        input_column_data.append(col)
+
+    input_column_data = 'item_id, rid, category, name, price'
+    input_value_data = '\'%s\', %d, \'%s\',\'%s\',\'%s\'' % (data['item_id'], int(data['rid']), str(data['category']), str(data['name']), str(data['price']))
+
+    insert_query = 'INSERT INTO `menu_items` (%s) values (%s);' % (input_column_data, input_value_data)
+
+    cursor.execute(insert_query)
+    conn.commit()
+    conn.close()
+    return True
+
 def fetch_category_menu_items(rid, mcategory):
     conn = get_mysql_conn()
     cursor = conn.cursor()

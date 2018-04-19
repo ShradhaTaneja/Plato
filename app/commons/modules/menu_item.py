@@ -1,6 +1,6 @@
 import app.menu_item.models as model
-import app.restaurant.models as rest_model
-
+from app.commons.modules import menu
+from random import randint
 
 def get_all_menu_items(rid):
     response = {}
@@ -32,6 +32,22 @@ def get_item(rid, item_id):
         data = model.fetch_item(rid, item_id)
         response['status'] = 'success'
         response['data'] = data
+    except Exception as e:
+        response['status'] = 'failure'
+        response['data'] = None
+        response['message'] = str(e)
+    return response
+
+def add_menu_item(data):
+    response = {}
+    if not menu.rest_category_exists(data['rid'], data['category']):
+        return {'status': 'failure', 'message': 'either restaurant or category is invalid'}
+
+    item_id = '%d-%s-%d' % (data['rid'], data['category'][0:3].upper(), randint(1000, 9999))
+    data['item_id'] = item_id
+    try:
+        model.insert_menu_item(data)
+        response['status'] = 'success'
     except Exception as e:
         response['status'] = 'failure'
         response['data'] = None
