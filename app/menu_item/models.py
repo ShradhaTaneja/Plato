@@ -79,3 +79,11 @@ def fetch_item(rid, item_id):
 
     conn.close()
     return all_data
+
+def delete_menu_item(rid, mcategory, item_id):
+    conn = get_mysql_conn()
+    cursor = conn.cursor()
+    query = 'DELETE FROM menu_items WHERE rid = %d AND category = \'%s\' AND item_id = \'%s\';' % (rid, mcategory, item_id)
+    cursor.execute(query)
+    conn.commit()
+    conn.close()
